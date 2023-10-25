@@ -35,20 +35,22 @@ def get_future_states(state):
     return future_states
 
 
-def hanoi_move_count():
-    initial_state = [[3, 2, 1], [], []]
-    queue = [initial_state]
+def hanoi_solver():
+    initial_path = [[[3, 2, 1], [], []]]
+    queue = [initial_path]
     visited = []
     while queue != []:
-        current_state = queue.pop(0)
+        current_path = queue.pop(0)
+        current_state = current_path[-1]
         visited.append(current_state)
         print(current_state)
         if current_state == [[], [], [3, 2, 1]]:
-            return
+            return current_path
         future_states = get_future_states(current_state)
         for future_state in future_states:
             if future_state not in visited:
-                queue.append(future_state)
+                queue.append(current_path + [future_state])
+    raise RuntimeError('My code sucks')
 
 
-hanoi_move_count()
+print(hanoi_solver())
